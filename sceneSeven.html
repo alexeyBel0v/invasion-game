@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ИНВАЗИЯ - Включение генератора</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <div class="scene-container">
+        <img id="scene-image" src="images/scene7-generator.jpg" class="fade-in">
+        <div class="content-container">
+            <div id="story" class="typewriter centered-text"></div>
+            <div id="choices" class="centered-choices"></div>
+        </div>
+        <button class="menu-btn" onclick="window.location.href='menu.html'">Вернуться в меню</button>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        window.Telegram.WebApp.ready();
+        adaptTheme();
+
+        // Текст сцены
+        const text = "Я врываюсь в комнату с генератором. Старый механизм гудит, я нажимаю на кнопку запуска. Свет мигает, но тут же раздаётся странный скрежет. Генератор дрожит — он на грани поломки. Что делать?";
+
+        // Печать текста и показ вариантов
+        typeText("story", text, () => {
+            const choicesDiv = document.getElementById("choices");
+            choicesDiv.innerHTML = `
+                <button class="choice-btn" onclick="ignore()">Игнорировать неисправности и попытаться запустить капсулу</button>
+                <button class="choice-btn" onclick="fix()">Исправить неисправности и перезапустить генератор</button>
+            `;
+            choicesDiv.classList.add("fade-in");
+        });
+
+        // Вариант "Игнорировать неисправности" — смерть
+        function ignore() {
+            document.getElementById("scene-image").src = "images/pic-3-youDie.jpg";
+            document.getElementById("choices").innerHTML = "";
+            typeText("story", "Я бегу к капсуле, игнорируя шум. Она не запускается — энергии нет. Дверь позади ломается. Монстры находят меня. Кровь и тьма...", () => {
+                setTimeout(() => window.location.href = "die.html", 5000);
+            });
+        }
+
+        // Вариант "Исправить неисправности" — правильный выбор с кнопкой "Далее"
+        function fix() {
+            document.getElementById("scene-image").src = "images/scene8-stable.jpg";
+            document.getElementById("story").innerText = "Я открываю панель, нахожу оборванный провод и чиню его. Генератор стабилизируется, гул стихает. Капсула теперь готова.";
+            const choicesDiv = document.getElementById("choices");
+            choicesDiv.innerHTML = `<button class="choice-btn" onclick="window.location.href='sceneEight.html'">Далее</button>`;
+            choicesDiv.classList.add("fade-in");
+        }
+    </script>
+</body>
+</html>

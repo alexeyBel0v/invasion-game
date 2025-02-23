@@ -1,0 +1,180 @@
+body {
+    margin: 0;
+    font-family: 'Courier New', monospace;
+    background: #1a1a1a;
+    color: #ff4d4d;
+    overflow: hidden;
+}
+
+/* Главное меню */
+.menu-container {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.5) contrast(1.2);
+    z-index: -1;
+}
+
+.title {
+    font-size: 48px;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 5px #ff0000;
+    margin-bottom: 20px;
+}
+
+.survive-btn {
+    padding: 15px 40px;
+    font-size: 24px;
+    background: #ff1a1a;
+    border: 2px solid #800000;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0 0 10px #ff0000;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.survive-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px #ff0000;
+}
+
+/* Общие стили для сцен */
+.scene-container {
+    position: relative;
+    height: 100vh;
+    text-align: center;
+}
+
+#scene-image {
+    position: absolute; /* Картинка на заднем плане */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Растягиваем картинку на весь экран */
+    border: 1px solid #ff4d4d;
+    box-shadow: 0 0 15px #800000;
+    z-index: 1; /* Картинка позади текста и кнопок */
+}
+
+/* Контейнер для текста и кнопок */
+.content-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 10; /* Контейнер поверх картинки */
+}
+
+.centered-text {
+    font-size: 18px;
+    white-space: pre-wrap;
+    text-shadow: 1px 1px 3px #ff0000;
+    text-align: center;
+    width: 80%;
+    background: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон для читаемости */
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Варианты выбора и кнопка "Далее" */
+.centered-choices {
+    margin-top: 20px; /* Отступ от текста */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.choice-btn {
+    padding: 10px 20px;
+    margin: 5px;
+    background: #4d0000;
+    border: 1px solid #ff4d4d;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s;
+    width: 200px; /* Фиксированная ширина */
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #800000;
+}
+
+.choice-btn:hover {
+    background: #800000;
+}
+
+/* Эффект моргания для sceneOne */
+.blink-effect {
+    filter: blur(2px) brightness(0.7);
+    transition: filter 0.5s;
+}
+
+.blink-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 5;
+}
+
+/* Кнопка "Вернуться в меню" */
+.menu-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    background: #4d0000;
+    border: 1px solid #ff4d4d;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0 0 10px #800000;
+    transition: background 0.3s, transform 0.3s;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    z-index: 10;
+}
+
+.menu-btn:hover {
+    background: #800000;
+    transform: scale(1.05);
+}
+
+/* Анимации */
+.fade-in {
+    animation: fadeIn 1s ease-in;
+}
+
+.fade-out {
+    animation: fadeOut 1s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}

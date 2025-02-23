@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ИНВАЗИЯ - Неисправная капсула</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <div class="scene-container">
+        <img id="scene-image" src="images/capsule.jpg" class="fade-in">
+        <div class="content-container">
+            <div id="story" class="typewriter centered-text"></div>
+            <div id="choices" class="centered-choices"></div>
+        </div>
+        <button class="menu-btn" onclick="window.location.href='menu.html'">Вернуться в меню</button>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        window.Telegram.WebApp.ready();
+        adaptTheme();
+
+        // Текст сцены
+        const text = "Я добираюсь до отсека с капсулами. Мрак и тишина. Многие капсулы разбиты, внутри — кровь и следы когтей. Нужно найти рабочую, и быстро. Что делать?";
+
+        // Печать текста и показ вариантов
+        typeText("story", text, () => {
+            const choicesDiv = document.getElementById("choices");
+            choicesDiv.innerHTML = `
+                <button class="choice-btn" onclick="searchAlone()">Попытаться самостоятельно найти исправную капсулу</button>
+                <button class="choice-btn" onclick="terminal()">Найти терминал в соседней комнате, для поиска исправной капсулы</button>
+            `;
+            choicesDiv.classList.add("fade-in");
+        });
+
+        // Вариант "Попытаться самостоятельно найти исправную капсулу" — смерть
+        function searchAlone() {
+            document.getElementById("scene-image").src = "images/pic-3-youDie.jpg";
+            document.getElementById("choices").innerHTML = "";
+            typeText("story", "Я осматриваю капсулы, но время уходит. Одна кажется целой, но не запускается. Шаги сзади. Монстр находит меня. Тьма...", () => {
+                setTimeout(() => window.location.href = "die.html", 5000);
+            });
+        }
+
+        // Вариант "Найти терминал в соседней комнате" — правильный выбор с кнопкой "Далее"
+        function terminal() {
+            document.getElementById("scene-image").src = "images/scene11-capsule.jpg";
+            document.getElementById("story").innerText = "Я бегу в соседнюю комнату. Терминал мигает, показывая исправную капсулу в углу. Она цела и готова к запуску.";
+            const choicesDiv = document.getElementById("choices");
+            choicesDiv.innerHTML = `<button class="choice-btn" onclick="window.location.href='sceneEleven.html'">Далее</button>`;
+            choicesDiv.classList.add("fade-in");
+        }
+    </script>
+</body>
+</html>

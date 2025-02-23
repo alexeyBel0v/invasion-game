@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ИНВАЗИЯ - Побег на капсуле</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <div class="scene-container">
+        <video id="scene-video" src="videos/invasionfinal.mp4" autoplay muted class="fade-in"></video>
+        <div class="content-container">
+            <div id="story" class="typewriter centered-text"></div>
+        </div>
+        <button class="menu-btn" onclick="window.location.href='menu.html'">Вернуться в меню</button>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        window.Telegram.WebApp.ready();
+        adaptTheme();
+
+        // Текст сцены
+        const text = "Капсула оживает. Двигатели ревут, я успеваю закрыть люк. Сквозь стекло вижу тень монстра — но я уже в воздухе. Я спасён... пока.";
+
+        // Элементы
+        const video = document.getElementById("scene-video");
+        const story = document.getElementById("story");
+
+        // Печать текста во время видео
+        typeText("story", text, () => {
+            // После текста ждём окончания видео
+            video.onended = () => {
+                window.location.href = "credits.html"; // Переход к титрам
+            };
+        });
+
+        // Форсируем переход через 10 секунд
+        setTimeout(() => {
+            if (!video.ended) {
+                video.currentTime = video.duration; // Завершаем видео
+            }
+        }, 10000);
+    </script>
+</body>
+</html>

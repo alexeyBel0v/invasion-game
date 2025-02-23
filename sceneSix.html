@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ИНВАЗИЯ - Наручный ПК</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <div class="scene-container">
+        <img id="scene-image" src="images/scene6-generator.jpg" class="fade-in">
+        <div class="content-container">
+            <div id="story" class="typewriter centered-text"></div>
+            <div id="choices" class="centered-choices"></div>
+        </div>
+        <button class="menu-btn" onclick="window.location.href='menu.html'">Вернуться в меню</button>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        window.Telegram.WebApp.ready();
+        adaptTheme();
+
+        // Текст сцены
+        const text = "Я осматриваю лабораторию и замечаю труп учёного в углу. На его запястье — наручный ПК. Экран мигает красным: 'Попасть в спасательную капсулу... Ошибка. Необходимо запустить резервный генератор.' Что делать?";
+
+        // Печать текста и показ вариантов
+        typeText("story", text, () => {
+            const choicesDiv = document.getElementById("choices");
+            choicesDiv.innerHTML = `
+                <button class="choice-btn" onclick="capsule()">Отправиться к капсуле</button>
+                <button class="choice-btn" onclick="monster()">Пойти за монстром</button>
+                <button class="choice-btn" onclick="generator()">Пойти в сторону генератора</button>
+            `;
+            choicesDiv.classList.add("fade-in");
+        });
+
+        // Вариант "Отправиться к капсуле" — смерть
+        function capsule() {
+            document.getElementById("scene-image").src = "images/pic-3-youDie.jpg";
+            document.getElementById("choices").innerHTML = "";
+            typeText("story", "Я бегу к капсуле, но без энергии она не работает. Шаги сзади. Тень набрасывается. Кровь заливает пол...", () => {
+                setTimeout(() => window.location.href = "die.html", 5000);
+            });
+        }
+
+        // Вариант "Пойти за монстром" — смерть
+        function monster() {
+            document.getElementById("scene-image").src = "images/pic-3-youDie.jpg";
+            document.getElementById("choices").innerHTML = "";
+            typeText("story", "Я иду за звуком рыка. Тьма впереди оживает. Когти находят меня первыми. Тьма поглощает...", () => {
+                setTimeout(() => window.location.href = "die.html", 5000);
+            });
+        }
+
+        // Вариант "Пойти в сторону генератора" — правильный выбор с кнопкой "Далее"
+        function generator() {
+            document.getElementById("scene-image").src = "images/scene6-generator.jpg";
+            document.getElementById("story").innerText = "Я направляюсь к генератору. Коридор тёмный, но вдали виднеется слабое свечение оборудования.";
+            const choicesDiv = document.getElementById("choices");
+            choicesDiv.innerHTML = `<button class="choice-btn" onclick="window.location.href='sceneSeven.html'">Далее</button>`;
+            choicesDiv.classList.add("fade-in");
+        }
+    </script>
+</body>
+</html>

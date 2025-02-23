@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ИНВАЗИЯ - Скрежет</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <div class="scene-container">
+        <img id="scene-image" src="images/pic-2-firstContact.jpg" class="fade-in">
+        <div class="content-container">
+            <div id="story" class="typewriter centered-text"></div>
+            <div id="choices" class="centered-choices"></div>
+        </div>
+        <button class="menu-btn" onclick="window.location.href='menu.html'">Вернуться в меню</button>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        window.Telegram.WebApp.ready();
+        adaptTheme();
+
+        const text = "Я прислоняюсь к холодной стене. Тишина... но вдруг — резкий скрежет за дверью, будто когти царапают металл. Дыхание перехватывает. Что делать?";
+
+        typeText("story", text, () => {
+            const choicesDiv = document.getElementById("choices");
+            choicesDiv.innerHTML = `
+                <button class="choice-btn" onclick="wrongChoice('openDoor')">Попытаться открыть дверь</button>
+                <button class="choice-btn" onclick="wrongChoice('ask')">Спросить кто там?</button>
+                <button class="choice-btn" onclick="rightChoice()">Выбраться через вентиляцию</button>
+            `;
+            choicesDiv.classList.add("fade-in");
+        });
+
+        function wrongChoice(action) {
+            const img = document.getElementById("scene-image");
+            img.classList.add("fade-out");
+            setTimeout(() => {
+                img.src = "images/pic-3-youDie.jpg";
+                img.classList.remove("fade-out");
+                img.classList.add("fade-in");
+                const deathText = action === "openDoor"
+                    ? "Дверь с грохотом распахнулась. Когтистые тени ворвались внутрь. Кровь заливает пол..."
+                    : "— Кто там? — шепчу я. Ответ — рёв. Дверь выламывается. Тьма поглощает меня...";
+                document.getElementById("choices").innerHTML = "";
+                typeText("story", deathText, () => {
+                    setTimeout(() => window.location.href = "die.html", 5000);
+                });
+            }, 1000);
+        }
+
+        function rightChoice() {
+            document.getElementById("scene-image").src = "images/pic-3-confirm.jpg";
+            document.getElementById("story").innerText = "Я нахожу решётку вентиляции. Срываю её и ползу в темноту...";
+            document.getElementById("choices").innerHTML = "";
+            setTimeout(() => window.location.href = "sceneFour.html", 2000);
+        }
+    </script>
+</body>
+</html>

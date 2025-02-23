@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ИНВАЗИЯ - Подать сигнал тревоги</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <div class="scene-container">
+        <img id="scene-image" src="images/scene8-stable.jpg" class="fade-in">
+        <div class="content-container">
+            <div id="story" class="typewriter centered-text"></div>
+            <div id="choices" class="centered-choices"></div>
+        </div>
+        <button class="menu-btn" onclick="window.location.href='menu.html'">Вернуться в меню</button>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        window.Telegram.WebApp.ready();
+        adaptTheme();
+
+        // Текст сцены
+        const text = "Генератор работает, но я решаю подать сигнал тревоги перед побегом. Если спасатели прибудут, они должны знать об опасности. Нужно найти панель управления. Где подать сигнал?";
+
+        // Печать текста и показ вариантов
+        typeText("story", text, () => {
+            const choicesDiv = document.getElementById("choices");
+            choicesDiv.innerHTML = `
+                <button class="choice-btn" onclick="mainComputer()">Подать сигнал через основной компьютер</button>
+                <button class="choice-btn" onclick="emergencyPanel()">Использовать аварийную панель связи</button>
+            `;
+            choicesDiv.classList.add("fade-in");
+        });
+
+        // Вариант "Подать сигнал через основной компьютер" — смерть
+        function mainComputer() {
+            document.getElementById("scene-image").src = "images/pic-3-youDie.jpg";
+            document.getElementById("choices").innerHTML = "";
+            typeText("story", "Я подхожу к основному компьютеру, но над ним сидит тень. Глаза вспыхивают, когти летят ко мне. Последнее, что я вижу — тьма...", () => {
+                setTimeout(() => window.location.href = "die.html", 5000);
+            });
+        }
+
+        // Вариант "Использовать аварийную панель связи" — правильный выбор с кнопкой "Далее"
+        function emergencyPanel() {
+            document.getElementById("scene-image").src = "images/scene9-signal.jpg";
+            document.getElementById("story").innerText = "Я нахожу аварийную панель в углу. Нажимаю кнопку — сигнал уходит в эфир. Теперь остаётся надеяться на спасение.";
+            const choicesDiv = document.getElementById("choices");
+            choicesDiv.innerHTML = `<button class="choice-btn" onclick="window.location.href='sceneNine.html'">Далее</button>`;
+            choicesDiv.classList.add("fade-in");
+        }
+    </script>
+</body>
+</html>

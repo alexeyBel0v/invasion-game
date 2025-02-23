@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ИНВАЗИЯ - Лаборатория</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <div class="scene-container">
+        <img id="scene-image" src="images/scene3-lab.jpg" class="fade-in">
+        <div class="content-container">
+            <div id="story" class="typewriter centered-text"></div>
+            <div id="next" class="centered-choices">
+                <button id="next-btn" class="choice-btn" onclick="window.location.href='sceneFive.html'" style="display: none;">Далее</button>
+            </div>
+        </div>
+        <button class="menu-btn" onclick="window.location.href='menu.html'">Вернуться в меню</button>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        window.Telegram.WebApp.ready();
+        adaptTheme();
+
+        // Текст сцены
+        const text = "Я вываливаюсь из вентиляционной шахты в помещение. Мрак и тишина давят на уши. Передо мной — лаборатория: ржавые столы, покрытые пятнами крови, разбитые колбы, мигающий свет над головой. Откуда-то доносится слабый гул...";
+
+        // Печать текста и показ кнопки "Далее"
+        typeText("story", text, () => {
+            document.getElementById("next-btn").style.display = "block";
+            document.getElementById("next-btn").classList.add("fade-in");
+        });
+    </script>
+</body>
+</html>

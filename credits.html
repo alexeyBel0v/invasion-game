@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ИНВАЗИЯ - Титры</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body class="credits-body">
+    <div class="credits-container">
+        <div class="credits-text">Разработчик: Game Quest Prodaction</div>
+        <video id="credits-video" src="videos/invasialogo.mp4" autoplay muted class="credits-video"></video>
+        <div class="credits-text">Особая благодарность: xAI и Telegram</div>
+    </div>
+    <button class="menu-btn" onclick="window.location.href='menu.html'">Вернуться в меню</button>
+    <script>
+        window.Telegram.WebApp.ready();
+        adaptTheme();
+
+        const video = document.getElementById("credits-video");
+        video.onended = () => {
+            window.location.href = "toBeContinued.html"; // Переход к "Продолжение следует"
+        };
+
+        // Форсируем переход через 6 секунд
+        setTimeout(() => {
+            if (!video.ended) {
+                video.currentTime = video.duration;
+            }
+        }, 6000);
+    </script>
+</body>
+</html>

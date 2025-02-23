@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ИНВАЗИЯ - Первый выбор</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <div class="scene-container">
+        <img id="scene-image" src="images/pic-3-confirm.jpg" class="fade-in">
+        <div id="story" class="typewriter"></div>
+        <div id="choices" class="choices"></div>
+        
+    </div>
+    <script src="script.js"></script>
+    <script>
+        window.Telegram.WebApp.ready();
+        adaptTheme();
+
+        const text = "Я в запертой комнате. За дверью что-то скребётся. Нужно действовать.";
+        typeText("story", text, () => {
+            const choicesDiv = document.getElementById("choices");
+            choicesDiv.innerHTML = `
+                <button onclick="wrongChoice('openDoor')">Попытаться открыть дверь</button>
+                <button onclick="wrongChoice('ask')">Спросить кто там?</button>
+                <button onclick="rightChoice()">Выбраться через вентиляцию</button>
+            `;
+            choicesDiv.classList.add("fade-in");
+        });
+
+        function wrongChoice(action) {
+            const img = document.getElementById("scene-image");
+            img.classList.add("fade-out");
+            setTimeout(() => {
+                img.src = "images/pic-3-youDie.jpg";
+                img.classList.remove("fade-out");
+                img.classList.add("fade-in");
+                document.getElementById("story").innerText = action === "openDoor" 
+                    ? "Дверь распахнулась. Монстры ворвались. Темнота..." 
+                    : "— Кто там? — ответа нет. Дверь выломана. Темнота...";
+                document.getElementById("choices").innerHTML = "";
+                showRestart();
+            }, 1000);
+        }
+
+        function rightChoice() {
+            window.location.href = "sceneFour.html"; // Следующая сцена
+        }
+
+        function showRestart() {
+            window.Telegram.WebApp.MainButton.setText("Начать заново").show().onClick(() => {
+                window.location.href = "menu.html";
+            });
+        }
+    </script>
+</body>
+</html>

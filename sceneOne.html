@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ИНВАЗИЯ - Пробуждение</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <div class="scene-container">
+        <img id="scene-image" src="images/pic-1-start2.jpg" class="blink-effect">
+        <div class="content-container">
+            <div id="story" class="typewriter centered-text"></div>
+            <div id="next" class="centered-choices">
+                <button id="next-btn" class="choice-btn" onclick="window.location.href='sceneTwo.html'" style="display: none;">Далее</button>
+            </div>
+        </div>
+        <div id="blink-overlay" class="blink-overlay"></div>
+        <button class="menu-btn" onclick="window.location.href='menu.html'">Вернуться в меню</button>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        window.Telegram.WebApp.ready();
+        adaptTheme();
+
+        const text = "Тьма... холодный металл под руками... где я? Голова раскалывается, будто кто-то вбил гвоздь мне в череп... что это за место?";
+
+        setTimeout(() => {
+            typeText("story", text, () => {
+                document.getElementById("scene-image").classList.remove("blink-effect");
+                document.getElementById("blink-overlay").style.display = "none";
+                document.getElementById("next-btn").style.display = "block";
+                document.getElementById("next-btn").classList.add("fade-in");
+            });
+        }, 6000);
+
+        function startBlinking() {
+            const overlay = document.getElementById("blink-overlay");
+            let blinkCount = 0;
+            const maxBlinks = 4;
+
+            function blink() {
+                if (blinkCount >= maxBlinks) return;
+                overlay.style.opacity = "1";
+                setTimeout(() => {
+                    overlay.style.opacity = "0";
+                    blinkCount++;
+                    setTimeout(blink, 1500);
+                }, 600);
+            }
+            blink();
+        }
+        startBlinking();
+    </script>
+</body>
+</html>

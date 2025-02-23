@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ИНВАЗИЯ - Побег</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <div class="scene-container">
+        <img id="scene-image" src="images/scene9-signal.jpg" class="fade-in">
+        <div class="content-container">
+            <div id="story" class="typewriter centered-text"></div>
+            <div id="choices" class="centered-choices"></div>
+        </div>
+        <button class="menu-btn" onclick="window.location.href='menu.html'">Вернуться в меню</button>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        window.Telegram.WebApp.ready();
+        adaptTheme();
+
+        // Текст сцены
+        const text = "Сигнал тревоги гудит в эфире. Пора бежать к спасательной капсуле. Впереди — открытый коридор, но откуда-то доносится скрежет. Какой путь выбрать?";
+
+        // Печать текста и показ вариантов
+        typeText("story", text, () => {
+            const choicesDiv = document.getElementById("choices");
+            choicesDiv.innerHTML = `
+                <button class="choice-btn" onclick="corridor()">Побежать через открытый коридор</button>
+                <button class="choice-btn" onclick="warehouse()">Использовать альтернативный маршрут через старые склады</button>
+            `;
+            choicesDiv.classList.add("fade-in");
+        });
+
+        // Вариант "Побежать через открытый коридор" — смерть
+        function corridor() {
+            document.getElementById("scene-image").src = "images/pic-3-youDie.jpg";
+            document.getElementById("choices").innerHTML = "";
+            typeText("story", "Я бегу по коридору, но из тени выскакивает монстр. Спрятаться негде. Когти вонзаются в грудь. Тьма...", () => {
+                setTimeout(() => window.location.href = "die.html", 5000);
+            });
+        }
+
+        // Вариант "Использовать альтернативный маршрут через старые склады" — правильный выбор с кнопкой "Далее"
+        function warehouse() {
+            document.getElementById("scene-image").src = "images/scene10-warehouse.jpg";
+            document.getElementById("story").innerText = "Я сворачиваю в старые склады. Скрежет близко, но я обхожу тень в темноте. Впереди — спасательная капсула.";
+            const choicesDiv = document.getElementById("choices");
+            choicesDiv.innerHTML = `<button class="choice-btn" onclick="window.location.href='sceneTen.html'">Далее</button>`;
+            choicesDiv.classList.add("fade-in");
+        }
+    </script>
+</body>
+</html>
